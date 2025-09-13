@@ -1,125 +1,101 @@
 import { supabase } from './supabase-client.js';
 
-// --- ELEMENTOS DEL DOM ---
+// Hacemos las funciones principales accesibles globalmente asignándolas a 'window'
+// para que el HTML pueda llamarlas directamente desde el atributo 'onsubmit'.
+
+// --- FUNCIÓN GLOBAL PARA MANEJAR EL INICIO DE SESIÓN ---
+window.handleLogin = async (event) => {
+    event.preventDefault(); // Prevenir que la página se recargue
+    const form = event.target;
+    clearError(form);
+    showError(form, "Procesando inicio de sesión..."); // Mensaje de feedback inmediato
+
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+        showError(form, `Error: ${error.message}`);
+    } else {
+        clearError(form);
+        window.location.href = 'wall.html'; // ¡Éxito! Redirigir al muro
+    }
+};
+
+// --- FUNCIÓN GLOBAL PARA MANEJAR EL REGISTRO ---
+window.handleRegister = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    clearError(form);
+    showError(form, "Procesando registro...");
+
+    const email = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+
+    const { data: { user }, error: signUpError } = await supabase.auth.signUp({ email, password });
+
+    if (signUpError) {
+        showError(form, `Error en el registro: ${signUpError.message}`);
+        return;
+    }
+
+    if (user) {
+        const { error: profileError } = await supabase
+            .from('profiles')
+            .insert([{ id: user.id, username: email.split('@')[0] }]);
+
+        if (profileError) {
+            showError(form, `Registro exitoso, pero no se pudo crear el perfil: ${profileError.message}`);
+        } else {
+            showError(form, '¡Registro completado! Revisa tu correo para verificar tu cuenta.');
+            form.reset();
+        }
+    }
+};
+
+// --- MANEJO DE ERRORES (Función de ayuda) ---
+const showError = (form, message) => {
+    let errorDiv = form.querySelector('.error-message');
+    if (!errorDiv) {
+        errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        form.prepend(errorDiv);
+    }
+    errorDiv.textContent = message;
+};
+
+const clearError = (form) => {
+    const errorDiv = form.querySelector('.error-message');
+    if (errorDiv) {
+        errorDiv.remove();
+    }
+};
+
+// --- LÓGICA PARA CAMBIAR ENTRE FORMULARIOS ---
 document.addEventListener('DOMContentLoaded', () => {
-    const showLoginBtn = document.getElementById('show-login-btn');
-    const showRegisterBtn = document.getElementById('show-register-btn');
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
+    const switchLink = document.getElementById('switch-link');
+    const formTitle = document.getElementById('form-title');
+    const switchText = document.getElementById('switch-text');
 
-    const loginError = document.getElementById('login-error');
-    const registerError = document.getElementById('register-error');
-    
-    // Enlace para recuperar contraseña (lo añadiremos al HTML en el siguiente paso)
-    const forgotPasswordLink = document.getElementById('forgot-password-link');
-
-    // --- MANEJO DE PESTAÑAS ---
-    showLoginBtn.addEventListener('click', () => {
-        loginForm.classList.add('active');
-        registerForm.classList.remove('active');
-        showLoginBtn.classList.add('active');
-        showRegisterBtn.classList.remove('active');
-    });
-
-    showRegisterBtn.addEventListener('click', () => {
-        registerForm.classList.add('active');
-        loginForm.classList.remove('active');
-        showRegisterBtn.classList.add('active');
-        showLoginBtn.classList.remove('active');
-    });
-
-    // --- MOSTRAR/OCULTAR MENSAJES DE ERROR ---
-    const showMessage = (area, message) => {
-        area.textContent = message;
-        area.classList.add('active');
-    };
-
-    const hideMessage = (area) => {
-        area.textContent = '';
-        area.classList.remove('active');
-    };
-
-    // --- LÓGICA DE INICIO DE SESIÓN ---
-    loginForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        hideMessage(loginError);
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-        if (error) {
-            showMessage(loginError, `Error: ${error.message}`);
-        } else {
-            window.location.href = 'wall.html';
-        }
-    });
-
-    // --- LÓGICA DE REGISTRO ---
-    registerForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        hideMessage(registerError);
-        const username = document.getElementById('register-username').value;
-        const email = document.getElementById('register-email').value;
-        const password = document.getElementById('register-password').value;
-
-        // Validar que el nombre de usuario no esté vacío
-        if (!username) {
-            showMessage(registerError, 'El nombre de usuario es obligatorio.');
-            return;
-        }
-
-        const { data: { user }, error } = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                data: { username }, // Guardar el nombre de usuario en los metadatos
-            },
-        });
-
-        if (error) {
-            showMessage(registerError, `Error: ${error.message}`);
-        } else if (user) {
-            // Crear el perfil del usuario después del registro exitoso
-            const { error: profileError } = await supabase
-                .from('profiles')
-                .insert([
-                    { 
-                        id: user.id, 
-                        username: username, 
-                        avatar_url: `https://api.dicebear.com/6.x/initials/svg?seed=${encodeURIComponent(username)}`
-                    }
-                ]);
-
-            if (profileError) {
-                showMessage(registerError, `Registro exitoso, pero hubo un error al crear tu perfil: ${profileError.message}. Por favor, actualízalo más tarde.`);
+    if (switchLink) {
+        switchLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isLogin = loginForm.style.display !== 'none';
+            if (isLogin) {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                formTitle.textContent = 'Crear Cuenta en Askboys';
+                switchText.textContent = '¿Ya tienes una cuenta?';
+                switchLink.textContent = 'Inicia Sesión';
             } else {
-                 showMessage(registerError, '¡Registro exitoso! Revisa tu correo para activar tu cuenta antes de iniciar sesión.');
-                 registerForm.reset();
-            }           
-        }
-    });
-    
-    // --- LÓGICA DE OLVIDÉ MI CONTRASEÑA ---
-    if (forgotPasswordLink) {
-        forgotPasswordLink.addEventListener('click', async (event) => {
-            event.preventDefault();
-            hideMessage(loginError);
-            const email = document.getElementById('login-email').value;
-
-            if (!email) {
-                showMessage(loginError, 'Por favor, introduce tu email arriba y haz clic de nuevo en el enlace.');
-                return;
-            }
-
-            const { error } = await supabase.auth.resetPasswordForEmail(email, {
-                redirectTo: window.location.origin, // URL a la que volverá el usuario
-            });
-
-            if (error) {
-                showMessage(loginError, `Error: ${error.message}`);
-            } else {
-                showMessage(loginError, 'Te hemos enviado un enlace para recuperar tu contraseña. Revisa tu correo.');
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                formTitle.textContent = 'Iniciar Sesión en Askboys';
+                switchText.textContent = '¿No tienes una cuenta?';
+                switchLink.textContent = 'Regístrate';
             }
         });
     }
