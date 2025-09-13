@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil | Askboys</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="profile.css">
+    <!-- Cache Busting: Se añade un número de versión para forzar la recarga de los archivos -->
+    <link rel="stylesheet" href="style.css?v=1.2">
+    <link rel="stylesheet" href="profile.css?v=1.2">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
@@ -15,7 +16,7 @@
             <a href="wall.html" class="app-title">Askboys</a>
             <nav>
                 <a href="profile.html" class="profile-link">
-                    <img id="profile-avatar-small" src="images/avatar-placeholder.png" alt="Avatar" class="avatar-small">
+                    <img id="profile-avatar-small" src="https://via.placeholder.com/40/222C32/FFFFFF?Text=A" alt="Avatar" class="avatar-small">
                     <span>Mi Perfil</span>
                 </a>
             </nav>
@@ -27,7 +28,7 @@
             <h2>Configuración de Perfil</h2>
             <form id="profile-form">
                 <div class="avatar-section">
-                    <img id="profile-avatar" src="images/avatar-placeholder.png" alt="Avatar" class="profile-avatar-large">
+                    <img id="profile-avatar" src="https://via.placeholder.com/150/222C32/FFFFFF?Text=User" alt="Avatar" class="profile-avatar-large">
                     <label for="avatar-upload" class="button button-secondary-outline">Cambiar foto</label>
                     <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
                 </div>
@@ -50,7 +51,8 @@
         </div>
     </main>
 
-    <script type="module" src="supabase-client.js"></script>
-    <script type="module" src="profile.js"></script>
+    <!-- Cache Busting: Se añade un número de versión para forzar la recarga de los archivos -->
+    <script type="module" src="supabase-client.js?v=1.2"></script>
+    <script type="module" src="profile.js?v=1.2"></script>
 </body>
 </html>
