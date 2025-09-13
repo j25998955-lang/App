@@ -1,0 +1,150 @@
+/* login.css - Estilos para la página de acceso y registro */
+
+/* El body hereda el fondo animado de style.css, aquí solo centramos el contenido */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 450px; /* Ancho máximo para la tarjeta de login */
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--border-radius-lg, 0.75rem);
+    box-shadow: var(--shadow-deep, 0 10px 25px -5px rgba(0, 0, 0, 0.1));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2.5rem; /* Aumentamos el padding para más espacio */
+    overflow: hidden; /* Evita que los elementos se salgan */
+}
+
+/* --- Selector de Formulario (Login/Registro) --- */
+.form-selector {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: var(--border-radius-md, 0.5rem);
+    margin-bottom: 2rem;
+    padding: 4px;
+}
+
+.selector-btn {
+    flex-grow: 1;
+    padding: 0.75rem 0.5rem;
+    border: none;
+    background-color: transparent;
+    border-radius: var(--border-radius-md, 0.5rem);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary-color, #6B7280);
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.selector-btn.active {
+    background-color: #FFFFFF;
+    color: var(--primary-color, #3B82F6);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Formularios de Autenticación --- */
+.auth-form {
+    display: none; /* Ocultos por defecto */
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.auth-form.active {
+    display: block; /* Visible si tiene la clase active */
+}
+
+.auth-form h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.auth-form p {
+    text-align: center;
+    color: var(--text-secondary-color, #6B7280);
+    margin-bottom: 2rem;
+}
+
+/* Ocultar párrafos en pantallas muy pequeñas para ahorrar espacio */
+@media (max-width: 400px) {
+    .auth-form p {
+        display: none;
+    }
+    .login-card {
+        padding: 1.5rem;
+    }
+}
+
+/* --- Estilos para Grupos de Inputs y Errores --- */
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color, #1F2937);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border-color, #E5E7EB);
+    border-radius: var(--border-radius-md, 0.5rem);
+    font-size: 1rem;
+    background-color: #FFFFFF;
+    color: var(--text-color, #1F2937);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary-color, #3B82F6);
+    box-shadow: 0 0 0 3px var(--primary-glow, rgba(59, 130, 246, 0.2));
+}
+
+.error-message {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--danger-color, #EF4444);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius-md, 0.5rem);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+    display: none; /* Oculto por defecto */
+}
+
+.error-message.active {
+    display: block;
+}
+
+.full-width {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

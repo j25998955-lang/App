@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil | Askboys</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="profile.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <a href="wall.html" class="app-title">Askboys</a>
+            <nav>
+                <a href="profile.html" class="profile-link">
+                    <img id="profile-avatar-small" src="images/avatar-placeholder.png" alt="Avatar" class="avatar-small">
+                    <span>Mi Perfil</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="profile-container">
+        <div class="card profile-card">
+            <h2>Configuración de Perfil</h2>
+            <form id="profile-form">
+                <div class="avatar-section">
+                    <img id="profile-avatar" src="images/avatar-placeholder.png" alt="Avatar" class="profile-avatar-large">
+                    <label for="avatar-upload" class="button button-secondary-outline">Cambiar foto</label>
+                    <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Nombre de usuario</label>
+                    <input type="text" id="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email" disabled> <!-- El email no se puede cambiar -->
+                </div>
+
+                <div class="profile-actions">
+                    <button type="submit" id="update-profile-btn" class="button button-primary-solid">Guardar Cambios</button>
+                    <button type="button" id="logout-btn" class="button button-danger-solid">Cerrar Sesión</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script type="module" src="supabase-client.js"></script>
+    <script type="module" src="profile.js"></script>
+</body>
+</html>

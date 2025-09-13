@@ -1,0 +1,67 @@
+/* Estilos específicos para la página de inicio */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hero-content {
+    background: rgba(255, 255, 255, 0.85); /* Un poco más opaco para legibilidad */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--border-radius-lg, 1rem);
+    padding: 3rem 4rem;
+    color: var(--text-color);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    color: var(--text-secondary-color);
+}
+
+.cta-button {
+    font-size: 1.25rem;
+    padding: 1rem 2.5rem;
+}
+
+/* --- Media Query para Responsividad --- */
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 2rem;
+    }
+
+    h1 {
+        font-size: 2.5rem; /* Tamaño más adecuado para móviles */
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .cta-button {
+        font-size: 1rem;
+        padding: 0.8rem 2rem;
+    }
+}

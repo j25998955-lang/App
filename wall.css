@@ -1,0 +1,266 @@
+/* wall.css */
+
+/* --- WALL & POSTING --- */
+#wall-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 0 15px;
+}
+
+.post-box {
+    padding: 20px;
+    margin-bottom: 2rem;
+}
+
+#question-form textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--border-color-light);
+    padding: 10px 0;
+    font-size: 1.1rem;
+    font-family: inherit;
+    resize: vertical;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+#question-form textarea:focus {
+    outline: none;
+    border-bottom-color: var(--primary-color);
+}
+
+#image-preview-container {
+    position: relative;
+    margin-top: 15px;
+}
+
+#image-preview {
+    max-width: 150px;
+    border-radius: 8px;
+}
+
+#remove-image-btn {
+    position: absolute;
+    top: -10px;
+    left: 140px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    border: none;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.button-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.button-link i {
+    font-size: 1.2rem;
+}
+
+/* --- POST/QUESTION STYLES --- */
+.post-wrapper {
+    padding: 20px;
+}
+
+.post-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    position: relative; /* For delete button positioning */
+}
+
+.post-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.post-header-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-header-info .username {
+    font-weight: 600;
+}
+
+.post-header-info .date {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.delete-btn {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.card:hover .delete-btn {
+    opacity: 1;
+}
+
+.post-content {
+    margin-bottom: 20px;
+}
+
+.post-content .question-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+/* --- ANSWERS --- */
+.answers-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color-light);
+}
+
+.answer {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.answer:last-child {
+    border-bottom: none;
+}
+
+.answer .post-header .post-avatar {
+    width: 36px;
+    height: 36px;
+}
+
+.answer-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    align-items: flex-start;
+}
+
+.answer-form textarea {
+    flex-grow: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+    font-family: inherit;
+    resize: vertical;
+    background: #f9f9f9;
+}
+
+.answer-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: white;
+}
+
+.answer-form .button-container {
+    flex-shrink: 0;
+}
+
+/* NOTIFICATIONS */
+.notification-bell {
+    position: relative;
+    cursor: pointer;
+}
+
+.notification-bell .ph {
+    font-size: 24px;
+    color: var(--text-secondary);
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: var(--danger-color);
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+}
+
+.notification-panel {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 300px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.notification-item {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color-light);
+    font-size: 0.9rem;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    #wall-container {
+        margin-top: 1rem;
+    }
+    .post-box, .post-wrapper {
+        padding: 15px;
+    }
+}
+
+/* --- PENDING POST STYLES --- */
+.pending-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background-color: var(--warning-color-light, #fffbe6);
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.pending-indicator i {
+    font-size: 1rem;
+}
+
+.card.is-pending {
+    opacity: 0.7;
+    border: 1px dashed var(--warning-color, #fadb14);
+}

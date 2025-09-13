@@ -1,0 +1,182 @@
+/* Estilos para la página de perfil */
+
+body {
+    background-color: var(--background-color, #f9fafb); /* Un fondo suave */
+}
+
+.profile-card {
+    margin-top: 2rem;
+    background-color: #ffffff;
+    border-radius: var(--border-radius-lg, 0.75rem);
+    box-shadow: var(--shadow-deep, 0 4px 12px rgba(0,0,0,0.08));
+    border: 1px solid var(--border-color, #E5E7EB);
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color, #E5E7EB);
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* --- Contenedor del Avatar y Lógica de Subida --- */
+.avatar-upload-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.avatar-large {
+    width: 100px; /* Un poco más grande para destacar */
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: filter 0.2s ease-in-out;
+}
+
+.avatar-edit-button {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: var(--primary-color);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.avatar-edit-button .ph {
+    font-size: 1.1rem;
+}
+
+.avatar-upload-container:hover .avatar-large {
+    filter: brightness(0.8);
+}
+
+.avatar-upload-container:hover .avatar-edit-button {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#avatar-file-input {
+    display: none;
+}
+
+.avatar-upload-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* --- Información del Perfil --- */
+#profile-username {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.profile-info {
+    padding: 0 1.5rem;
+}
+
+.profile-info h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color, #E5E7EB);
+    padding-bottom: 0.5rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: var(--text-secondary-color, #6B7280);
+}
+
+.info-item .ph {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+}
+
+/* --- Botones de Acción --- */
+.profile-actions {
+    display: flex;
+    justify-content: center; /* Centrado en escritorio */
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color, #E5E7EB);
+}
+
+.profile-actions .button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* --- Media Query para Responsividad --- */
+@media (max-width: 768px) {
+    .profile-card {
+        margin-top: 1rem;
+        padding: 1.5rem;
+    }
+
+    .avatar-large {
+        width: 80px;
+        height: 80px;
+    }
+
+    #profile-username {
+        font-size: 1.75rem;
+    }
+
+    .profile-actions {
+        flex-direction: column; /* Apila los botones verticalmente */
+        align-items: stretch; /* Estira los botones para ocupar el ancho */
+    }
+
+    .profile-actions .button {
+        justify-content: center; /* Centra el texto e icono del botón */
+    }
+}
+
+/* --- ESTILOS PARA LA NOTIFICACIÓN --- */
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--success-color, #28a745);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--border-radius-md, 0.5rem);
+    box-shadow: var(--shadow-lg, 0 8px 16px rgba(0,0,0,0.15));
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}

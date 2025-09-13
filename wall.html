@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muro | Askboys</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Links a las hojas de estilo corregidos -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="wall.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-content">
+             <a href="wall.html" class="app-title">Askboys</a>
+            <nav>
+                <div id="notification-bell" class="notification-bell">
+                    <i class="ph ph-bell"></i>
+                    <div id="notification-count" class="notification-count" style="display: none;"></div>
+                </div>
+                <a href="profile.html" class="profile-link">
+                    <img id="profile-avatar-small" src="images/avatar-placeholder.png" alt="Avatar" class="avatar-small">
+                    <span>Mi Perfil</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+    
+    <div id="notification-panel"></div>
+
+
+    <main id="wall-container">
+        <div class="card post-box">
+            <form id="question-form">
+                <textarea id="question-text" placeholder="¿Qué quieres preguntar o compartir?" required rows="3"></textarea>
+                
+                <div id="image-preview-container" style="display:none;">
+                    <img id="image-preview" src="#" alt="Previsualización de imagen"/>
+                    <button type="button" id="remove-image-btn" class="icon-button">&times;</button>
+                </div>
+
+                <div class="post-actions">
+                    <label for="question-image-upload" class="button-link">
+                        <i class="ph ph-image"></i> Foto
+                    </label>
+                    <input type="file" id="question-image-upload" accept="image/*" style="display: none;">
+                    <button id="post-question-btn" type="submit" class="button button-primary-solid">Publicar</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="sync-indicator" style="display: none; padding: 10px; background-color: var(--primary-color-light); color: var(--text-primary); text-align: center; margin: 15px; border-radius: 8px; font-size: 0.9rem;">
+            <i class="ph ph-arrows-clockwise"></i> Sincronizando publicaciones pendientes...
+        </div>
+
+        <div id="questions-container">
+            <!-- Las preguntas se cargarán aquí -->
+        </div>
+
+        <div id="loading-indicator" style="display: none; text-align: center; padding: 20px;">
+            <p>Cargando más publicaciones...</p>
+        </div>
+
+    </main>
+
+    <div id="delete-confirm-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h3>Confirmar Borrado</h3>
+            <p>¿Estás seguro de que quieres borrar esta publicación? Esta acción no se puede deshacer.</p>
+            <div class="modal-actions">
+                <button id="cancel-delete-btn" class="button button-secondary-outline">Cancelar</button>
+                <button id="confirm-delete-btn" class="button button-danger-solid">Sí, borrar</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <!-- ... footer content ... -->
+    </footer>
+
+    <script type="module" src="supabase-client.js"></script>
+    <script type="module" src="offline-sync.js"></script>
+    <script type="module" src="wall.js"></script>
+</body>
+</html>
